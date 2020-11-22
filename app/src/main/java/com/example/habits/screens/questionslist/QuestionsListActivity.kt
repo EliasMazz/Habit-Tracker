@@ -13,6 +13,8 @@ import com.example.habits.Constants
 import com.example.habits.R
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.screens.common.dialogs.ServerErrorDialogFragment
+import com.example.habits.screens.model.Question
+import com.example.habits.screens.questiondetails.QuestionDetailsActivity
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,7 +34,7 @@ class QuestionsListActivity : AppCompatActivity() {
         setContentView(R.layout.layout_questions_list)
 
         //init pull to refresh
-        swipeRefresh = findViewById(R.id.swipeRefresh)
+        swipeRefresh = findViewById(R.id.swipe_refresh)
         swipeRefresh.setOnRefreshListener {
             fetchQuestions()
         }
@@ -41,7 +43,7 @@ class QuestionsListActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
         questionsListAdapter = QuestionsListAdapter { clickedQuestion ->
-            //TODO
+            QuestionDetailsActivity.start(this, clickedQuestion.id)
         }
 
         recyclerView.adapter = questionsListAdapter
