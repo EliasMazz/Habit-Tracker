@@ -1,6 +1,5 @@
 package com.example.habits.screens.questionslist
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.habits.R
 import com.example.habits.screens.common.viewsmvc.BaseViewMvc
-import com.example.habits.screens.model.Question
+import com.example.habits.questions.model.Question
 
 class QuestionListViewMvc(
     layoutInflater: LayoutInflater,

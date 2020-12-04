@@ -1,6 +1,6 @@
 package com.example.habits.networking
 
-import com.example.habits.screens.model.QuestionWithBody
+import com.example.habits.questions.model.QuestionWithBody
 import com.google.gson.annotations.SerializedName
 
 data class SingleQuestionReponseSchema(
