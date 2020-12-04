@@ -7,12 +7,10 @@ import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import com.example.habits.Constants
 import com.example.habits.networking.StackoverflowApi
+import com.example.habits.questions.FetchQuestionUseCase
 import com.example.habits.screens.common.dialogs.ServerErrorDialogFragment
 import kotlinx.coroutines.*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.Listener {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -20,18 +18,14 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.List
     private lateinit var stackOverflowApi: StackoverflowApi
     private lateinit var questionId: String
     private lateinit var questionDetailsViewMvc: QuestionDetailsViewMvc
+    private lateinit var fetchQuestionUseCase: FetchQuestionUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         questionDetailsViewMvc = QuestionDetailsViewMvc(LayoutInflater.from(this), null)
         setContentView(questionDetailsViewMvc.rootView)
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        stackOverflowApi = retrofit.create(StackoverflowApi::class.java)
+        fetchQuestionUseCase = FetchQuestionUseCase()
 
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
     }
@@ -52,30 +46,28 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.List
         coroutineScope.launch {
             questionDetailsViewMvc.disableSwipeToRefresh()
             questionDetailsViewMvc.showProgressIndication()
+            val result = fetchQuestionUseCase.fetchQuestionDetails(questionId)
             try {
-                val response = stackOverflowApi.questionDetails(questionId)
-                if (response.isSuccessful && response.body() != null) {
-                    val questionBody = response.body()!!.question.body
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        questionDetailsViewMvc.setQuestionBodyText(
-                            Html.fromHtml(
-                                questionBody,
-                                Html.FROM_HTML_MODE_LEGACY
+                when (result) {
+                    is FetchQuestionUseCase.Result.Sucess -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            questionDetailsViewMvc.setQuestionBodyText(
+                                Html.fromHtml(
+                                    result.body,
+                                    Html.FROM_HTML_MODE_LEGACY
+                                )
                             )
-                        )
-
-                    } else {
-                        questionDetailsViewMvc.setQuestionBodyText(Html.fromHtml(questionBody))
+                        } else {
+                            questionDetailsViewMvc.setQuestionBodyText(Html.fromHtml(result.body))
+                        }
                     }
-                } else {
-                    onFetchFailed()
+                    is FetchQuestionUseCase.Result.Failure -> {
+                        onFetchFailed()
+                    }
                 }
+            } finally {
                 questionDetailsViewMvc.hideProgressIndication()
                 questionDetailsViewMvc.enableSwipeToRefresh()
-            } catch (t: Throwable) {
-                if (t !is CancellationException) {
-                    onFetchFailed()
-                }
             }
         }
     }
