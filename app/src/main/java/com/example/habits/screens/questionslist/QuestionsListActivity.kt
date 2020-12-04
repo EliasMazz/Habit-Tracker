@@ -59,7 +59,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener 
                         viewMvc.bindQuestions(result.questions)
                         isDataLoaded = true
                     }
-                    is FetchQuestionsUseCase.Result.Failure {
+                    is FetchQuestionsUseCase.Result.Failure -> {
                         onFetchFailed()
                     }
                 }
