@@ -1,34 +1,25 @@
 package com.example.habits.screens.questiondetails
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.IdRes
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.habits.R
+import com.example.habits.screens.common.viewsmvc.BaseViewMvc
 
 class QuestionDetailsViewMvc(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup?
+) : BaseViewMvc<QuestionDetailsViewMvc.Listener>(
+    layoutInflater,
+    viewGroup,
+    R.layout.layout_question_details
 ) {
     private val swipeRefresh: SwipeRefreshLayout
     private val txtQuestionBody: TextView
 
-    val rootView = layoutInflater.inflate(R.layout.layout_question_details, viewGroup, false)
-
-    private val listeners = HashSet<Listener>()
-
     interface Listener {
         fun onRefreshClicked()
-    }
-
-    fun registerListener(listener: Listener) {
-        listeners.add(listener)
-    }
-
-    fun unregisterListener(listener: Listener) {
-        listeners.remove(listener)
     }
 
     fun setQuestionBodyText(questionBody: CharSequence) {
@@ -39,7 +30,7 @@ class QuestionDetailsViewMvc(
         swipeRefresh.isEnabled = true
     }
 
-    fun disableSwipeToRefresh(){
+    fun disableSwipeToRefresh() {
         swipeRefresh.isEnabled = false
     }
 
@@ -62,6 +53,5 @@ class QuestionDetailsViewMvc(
     fun hideProgressIndication() {
         swipeRefresh.isRefreshing = false
     }
-
-    fun <T : View?> findViewById(@IdRes id: Int): T = rootView.findViewById<T>(id)
 }
+
