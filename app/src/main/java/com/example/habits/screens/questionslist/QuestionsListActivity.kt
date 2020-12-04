@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habits.networking.StackoverflowApi
-import com.example.habits.questions.FetchQuestionsUseCase
+import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.model.Question
 import com.example.habits.screens.common.dialogs.ServerErrorDialogFragment
 import com.example.habits.screens.questiondetails.QuestionDetailsActivity
@@ -15,7 +15,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener 
 
     private lateinit var viewMvc: QuestionListViewMvc
     private lateinit var stackOverflowApi: StackoverflowApi
-    private lateinit var fetchQuestionsUseCase: FetchQuestionsUseCase
+    private lateinit var fetchQuestionListUseCase: FetchQuestionListUseCase
 
     private var isDataLoaded = false
 
@@ -24,7 +24,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener 
 
         viewMvc = QuestionListViewMvc(LayoutInflater.from(this), null)
         setContentView(viewMvc.rootView)
-        fetchQuestionsUseCase = FetchQuestionsUseCase()
+        fetchQuestionListUseCase = FetchQuestionListUseCase()
     }
 
     override fun onStart() {
@@ -52,14 +52,14 @@ class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener 
     private fun fetchQuestions() {
         coroutineScope.launch {
             viewMvc.showProgressIndication()
-            val result = fetchQuestionsUseCase.fetchLatestQuestions()
+            val result = fetchQuestionListUseCase.fetchLatestQuestions()
             try {
                 when (result) {
-                    is FetchQuestionsUseCase.Result.Success -> {
+                    is FetchQuestionListUseCase.Result.Success -> {
                         viewMvc.bindQuestions(result.questions)
                         isDataLoaded = true
                     }
-                    is FetchQuestionsUseCase.Result.Failure -> {
+                    is FetchQuestionListUseCase.Result.Failure -> {
                         onFetchFailed()
                     }
                 }

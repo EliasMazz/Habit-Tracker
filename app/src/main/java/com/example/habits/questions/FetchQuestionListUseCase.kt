@@ -2,7 +2,6 @@ package com.example.habits.questions
 
 import com.example.habits.Constants
 import com.example.habits.networking.StackoverflowApi
-import com.example.habits.questions.FetchQuestionsUseCase.*
 import com.example.habits.questions.model.Question
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +9,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class FetchQuestionsUseCase {
+class FetchQuestionListUseCase {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(Constants.BASE_URL)
