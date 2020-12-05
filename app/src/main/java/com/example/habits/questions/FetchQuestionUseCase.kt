@@ -1,20 +1,12 @@
 package com.example.habits.questions
 
-import com.example.habits.Constants
 import com.example.habits.networking.StackoverflowApi
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class FetchQuestionUseCase {
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
+class FetchQuestionUseCase(retrofit: Retrofit) {
     private val stackOverflowApi = retrofit.create(StackoverflowApi::class.java)
 
     sealed class Result {

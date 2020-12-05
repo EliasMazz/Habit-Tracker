@@ -3,6 +3,7 @@ package com.example.habits.screens.questionslist
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import com.example.habits.MyApplication
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.model.Question
@@ -25,7 +26,10 @@ class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener 
 
         viewMvc = QuestionListViewMvc(LayoutInflater.from(this), null)
         setContentView(viewMvc.rootView)
-        fetchQuestionListUseCase = FetchQuestionListUseCase()
+
+        fetchQuestionListUseCase =
+            FetchQuestionListUseCase(((application as MyApplication).retrofit))
+
         dialogsNavigator = DialogsNavigator(supportFragmentManager)
     }
 

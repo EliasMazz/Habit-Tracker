@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
+import com.example.habits.MyApplication
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionUseCase
 import com.example.habits.screens.common.dialogs.DialogsNavigator
@@ -27,7 +28,7 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.List
         setContentView(questionDetailsViewMvc.rootView)
 
         dialogNavigator = DialogsNavigator(supportFragmentManager)
-        fetchQuestionUseCase = FetchQuestionUseCase()
+        fetchQuestionUseCase = FetchQuestionUseCase((application as MyApplication).retrofit)
 
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
     }
