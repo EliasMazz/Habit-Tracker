@@ -28,7 +28,8 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.List
         setContentView(questionDetailsViewMvc.rootView)
 
         dialogNavigator = DialogsNavigator(supportFragmentManager)
-        fetchQuestionUseCase = FetchQuestionUseCase((application as MyApplication).retrofit)
+
+        fetchQuestionUseCase = (application as MyApplication).fetchQuestionUseCase
 
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
     }

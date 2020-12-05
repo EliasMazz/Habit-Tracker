@@ -1,17 +1,12 @@
 package com.example.habits.questions
 
-import com.example.habits.Constants
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.model.Question
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class FetchQuestionListUseCase(retrofit: Retrofit) {
-
-    private val stackOverflowApi = retrofit.create(StackoverflowApi::class.java)
+class FetchQuestionListUseCase(private val stackoverflowApi: StackoverflowApi) {
 
     sealed class Result {
         class Success(val questions: List<Question>) : Result()
@@ -21,7 +16,7 @@ class FetchQuestionListUseCase(retrofit: Retrofit) {
     suspend fun fetchLatestQuestions() =
         withContext(Dispatchers.IO) {
             try {
-                val response = stackOverflowApi.lastActiveQuestions(20)
+                val response = stackoverflowApi.lastActiveQuestions(20)
                 if (response.isSuccessful && response.body()!!.questions != null) {
                     return@withContext Result.Success(response.body()!!.questions)
                 } else {
