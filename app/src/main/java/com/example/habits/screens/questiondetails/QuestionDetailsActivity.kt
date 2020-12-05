@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionUseCase
-import com.example.habits.screens.common.dialogs.ServerErrorDialogFragment
+import com.example.habits.screens.common.dialogs.DialogsNavigator
 import kotlinx.coroutines.*
 
 class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.Listener {
@@ -19,12 +19,14 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.List
     private lateinit var questionId: String
     private lateinit var questionDetailsViewMvc: QuestionDetailsViewMvc
     private lateinit var fetchQuestionUseCase: FetchQuestionUseCase
+    private lateinit var dialogNavigator: DialogsNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         questionDetailsViewMvc = QuestionDetailsViewMvc(LayoutInflater.from(this), null)
         setContentView(questionDetailsViewMvc.rootView)
 
+        dialogNavigator = DialogsNavigator(supportFragmentManager)
         fetchQuestionUseCase = FetchQuestionUseCase()
 
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
@@ -77,9 +79,7 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.List
     }
 
     private fun onFetchFailed() {
-        supportFragmentManager.beginTransaction()
-            .add(ServerErrorDialogFragment.newInstance(), null)
-            .commitAllowingStateLoss()
+        dialogNavigator.showServerErrorDialog()
     }
 
     override fun onSupportNavigateUp(): Boolean {

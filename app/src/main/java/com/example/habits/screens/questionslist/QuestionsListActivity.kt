@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.model.Question
-import com.example.habits.screens.common.dialogs.ServerErrorDialogFragment
+import com.example.habits.screens.common.dialogs.DialogsNavigator
 import com.example.habits.screens.questiondetails.QuestionDetailsActivity
 import kotlinx.coroutines.*
 
@@ -16,6 +16,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener 
     private lateinit var viewMvc: QuestionListViewMvc
     private lateinit var stackOverflowApi: StackoverflowApi
     private lateinit var fetchQuestionListUseCase: FetchQuestionListUseCase
+    private lateinit var dialogsNavigator: DialogsNavigator
 
     private var isDataLoaded = false
 
@@ -25,6 +26,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener 
         viewMvc = QuestionListViewMvc(LayoutInflater.from(this), null)
         setContentView(viewMvc.rootView)
         fetchQuestionListUseCase = FetchQuestionListUseCase()
+        dialogsNavigator = DialogsNavigator(supportFragmentManager)
     }
 
     override fun onStart() {
@@ -70,8 +72,6 @@ class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener 
     }
 
     private fun onFetchFailed() {
-        supportFragmentManager.beginTransaction()
-            .add(ServerErrorDialogFragment.newInstance(), null)
-            .commitAllowingStateLoss()
+        dialogsNavigator.showServerErrorDialog()
     }
 }
