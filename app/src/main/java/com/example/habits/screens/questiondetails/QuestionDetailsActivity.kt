@@ -6,14 +6,13 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
-import com.example.habits.MyApplication
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionUseCase
+import com.example.habits.screens.activities.BaseActivity
 import com.example.habits.screens.common.dialogs.DialogsNavigator
 import kotlinx.coroutines.*
 
-class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.Listener {
+class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     private lateinit var stackOverflowApi: StackoverflowApi
@@ -29,7 +28,7 @@ class QuestionDetailsActivity : AppCompatActivity(), QuestionDetailsViewMvc.List
 
         dialogNavigator = DialogsNavigator(supportFragmentManager)
 
-        fetchQuestionUseCase = (application as MyApplication).fetchQuestionUseCase
+        fetchQuestionUseCase = compositionRoot.fetchQuestionUseCase
 
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
     }

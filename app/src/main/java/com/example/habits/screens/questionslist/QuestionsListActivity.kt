@@ -7,11 +7,12 @@ import com.example.habits.MyApplication
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.model.Question
+import com.example.habits.screens.activities.BaseActivity
 import com.example.habits.screens.common.dialogs.DialogsNavigator
 import com.example.habits.screens.questiondetails.QuestionDetailsActivity
 import kotlinx.coroutines.*
 
-class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener {
+class QuestionsListActivity : BaseActivity(), QuestionListViewMvc.Listener {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     private lateinit var viewMvc: QuestionListViewMvc
@@ -27,7 +28,7 @@ class QuestionsListActivity : AppCompatActivity(), QuestionListViewMvc.Listener 
         viewMvc = QuestionListViewMvc(LayoutInflater.from(this), null)
         setContentView(viewMvc.rootView)
 
-        fetchQuestionListUseCase = (application as MyApplication).fetchQuestionListUseCase
+        fetchQuestionListUseCase = compositionRoot.fetchQuestionListUseCase
 
         dialogsNavigator = DialogsNavigator(supportFragmentManager)
     }
