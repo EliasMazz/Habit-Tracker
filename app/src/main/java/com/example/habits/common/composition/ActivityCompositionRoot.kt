@@ -13,8 +13,6 @@ class ActivityCompositionRoot(
     private val activity: AppCompatActivity,
     private val appCompositionRoot: AppCompositionRoot
 ) {
-
-
     val screensNavigator by lazy {
         ScreensNavigator(activity)
     }

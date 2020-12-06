@@ -12,15 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 class QuestionsListActivity : BaseActivity() {
-    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-
-    private lateinit var viewMvc: QuestionListViewMvc
-    private lateinit var stackOverflowApi: StackoverflowApi
-    private lateinit var fetchQuestionListUseCase: FetchQuestionListUseCase
-    private lateinit var dialogsNavigator: DialogsNavigator
-    private lateinit var screensNavigator: ScreensNavigator
-
-    private var isDataLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

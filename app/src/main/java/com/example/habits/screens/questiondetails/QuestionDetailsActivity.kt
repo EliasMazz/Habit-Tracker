@@ -15,12 +15,13 @@ import kotlinx.coroutines.*
 class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private lateinit var stackOverflowApi: StackoverflowApi
-    private lateinit var questionId: String
-    private lateinit var questionDetailsViewMvc: QuestionDetailsViewMvc
     private lateinit var fetchQuestionUseCase: FetchQuestionUseCase
     private lateinit var dialogsNavigator: DialogsNavigator
     private lateinit var screensNavigator: ScreensNavigator
+
+    private lateinit var questionDetailsViewMvc: QuestionDetailsViewMvc
+
+    private lateinit var questionId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +30,7 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener 
 
         dialogsNavigator = compositionRoot.dialogsNavigator
         screensNavigator = compositionRoot.screensNavigator
-
         fetchQuestionUseCase = compositionRoot.fetchQuestionUseCase
-
 
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
     }
@@ -99,5 +98,4 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener 
             context.startActivity(intent)
         }
     }
-
 }
