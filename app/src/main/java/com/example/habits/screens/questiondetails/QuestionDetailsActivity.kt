@@ -84,7 +84,7 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener 
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        compositionRoot.screensNavigator.navigateBack()
         return true
     }
 

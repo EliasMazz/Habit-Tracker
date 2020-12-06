@@ -2,14 +2,12 @@ package com.example.habits.screens.questionslist
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
-import com.example.habits.MyApplication
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.model.Question
 import com.example.habits.screens.activities.BaseActivity
 import com.example.habits.screens.common.dialogs.DialogsNavigator
-import com.example.habits.screens.questiondetails.QuestionDetailsActivity
+import com.example.habits.screens.common.screens.ScreensNavigator
 import kotlinx.coroutines.*
 
 class QuestionsListActivity : BaseActivity(), QuestionListViewMvc.Listener {
@@ -19,6 +17,7 @@ class QuestionsListActivity : BaseActivity(), QuestionListViewMvc.Listener {
     private lateinit var stackOverflowApi: StackoverflowApi
     private lateinit var fetchQuestionListUseCase: FetchQuestionListUseCase
     private lateinit var dialogsNavigator: DialogsNavigator
+    private lateinit var screensNavigator: ScreensNavigator
 
     private var isDataLoaded = false
 
@@ -30,6 +29,7 @@ class QuestionsListActivity : BaseActivity(), QuestionListViewMvc.Listener {
 
         fetchQuestionListUseCase = compositionRoot.fetchQuestionListUseCase
 
+        screensNavigator = compositionRoot.screensNavigator
         dialogsNavigator = DialogsNavigator(supportFragmentManager)
     }
 
@@ -46,7 +46,7 @@ class QuestionsListActivity : BaseActivity(), QuestionListViewMvc.Listener {
     }
 
     override fun onQuestionClicked(clickedQuestion: Question) {
-        QuestionDetailsActivity.start(this, clickedQuestion.id)
+        screensNavigator.startQuestionDetails(clickedQuestion.id)
     }
 
     override fun onStop() {

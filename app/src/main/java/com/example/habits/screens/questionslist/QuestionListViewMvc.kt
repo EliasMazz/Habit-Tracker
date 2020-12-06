@@ -29,7 +29,6 @@ class QuestionListViewMvc(
     }
 
     init {
-
         //init pull to refresh
         swipeRefresh = findViewById(R.id.swipe_refresh)
 
