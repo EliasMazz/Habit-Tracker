@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.view.LayoutInflater
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionUseCase
 import com.example.habits.screens.activities.BaseActivity
@@ -25,13 +24,14 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        questionDetailsViewMvc = QuestionDetailsViewMvc(LayoutInflater.from(this), null)
+        questionDetailsViewMvc = compositionRoot.viewMvcFactory.newQuestionsDetailViewMvc(null)
         setContentView(questionDetailsViewMvc.rootView)
 
         dialogsNavigator = compositionRoot.dialogsNavigator
         screensNavigator = compositionRoot.screensNavigator
 
         fetchQuestionUseCase = compositionRoot.fetchQuestionUseCase
+
 
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
     }
