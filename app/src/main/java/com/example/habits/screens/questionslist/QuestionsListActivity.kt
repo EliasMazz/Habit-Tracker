@@ -30,7 +30,7 @@ class QuestionsListActivity : BaseActivity(), QuestionListViewMvc.Listener {
         fetchQuestionListUseCase = compositionRoot.fetchQuestionListUseCase
 
         screensNavigator = compositionRoot.screensNavigator
-        dialogsNavigator = DialogsNavigator(supportFragmentManager)
+        dialogsNavigator = compositionRoot.dialogsNavigator
     }
 
     override fun onStart() {

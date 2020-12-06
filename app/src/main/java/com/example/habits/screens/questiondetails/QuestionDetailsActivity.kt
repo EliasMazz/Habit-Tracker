@@ -10,6 +10,7 @@ import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionUseCase
 import com.example.habits.screens.activities.BaseActivity
 import com.example.habits.screens.common.dialogs.DialogsNavigator
+import com.example.habits.screens.common.screens.ScreensNavigator
 import kotlinx.coroutines.*
 
 class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener {
@@ -19,14 +20,16 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener 
     private lateinit var questionId: String
     private lateinit var questionDetailsViewMvc: QuestionDetailsViewMvc
     private lateinit var fetchQuestionUseCase: FetchQuestionUseCase
-    private lateinit var dialogNavigator: DialogsNavigator
+    private lateinit var dialogsNavigator: DialogsNavigator
+    private lateinit var screensNavigator: ScreensNavigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         questionDetailsViewMvc = QuestionDetailsViewMvc(LayoutInflater.from(this), null)
         setContentView(questionDetailsViewMvc.rootView)
 
-        dialogNavigator = DialogsNavigator(supportFragmentManager)
+        dialogsNavigator = compositionRoot.dialogsNavigator
+        screensNavigator = compositionRoot.screensNavigator
 
         fetchQuestionUseCase = compositionRoot.fetchQuestionUseCase
 
@@ -80,11 +83,11 @@ class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener 
     }
 
     private fun onFetchFailed() {
-        dialogNavigator.showServerErrorDialog()
+        dialogsNavigator.showServerErrorDialog()
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        compositionRoot.screensNavigator.navigateBack()
+        screensNavigator.navigateBack()
         return true
     }
 
