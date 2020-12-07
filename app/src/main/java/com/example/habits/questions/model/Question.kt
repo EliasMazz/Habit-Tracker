@@ -1,4 +1,4 @@
-package com.example.habits.screens.model
+package com.example.habits.questions.model
 
 import com.google.gson.annotations.SerializedName
 
