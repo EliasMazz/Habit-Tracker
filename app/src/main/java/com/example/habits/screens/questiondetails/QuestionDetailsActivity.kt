@@ -5,32 +5,36 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import com.example.habits.networking.StackoverflowApi
+import com.example.habits.common.dependencyinjection.Service
 import com.example.habits.questions.FetchQuestionUseCase
 import com.example.habits.screens.activities.BaseActivity
 import com.example.habits.screens.common.dialogs.DialogsNavigator
 import com.example.habits.screens.common.screens.ScreensNavigator
+import com.example.habits.screens.common.viewsmvc.ViewMvcFactory
 import kotlinx.coroutines.*
 
 class QuestionDetailsActivity : BaseActivity(), QuestionDetailsViewMvc.Listener {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
+    @field:Service
     private lateinit var fetchQuestionUseCase: FetchQuestionUseCase
+    @field:Service
     private lateinit var dialogsNavigator: DialogsNavigator
+    @field:Service
     private lateinit var screensNavigator: ScreensNavigator
+    @field:Service
+    private lateinit var viewMvcFactory: ViewMvcFactory
 
     private lateinit var questionDetailsViewMvc: QuestionDetailsViewMvc
 
     private lateinit var questionId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        injector.inject(this)
         super.onCreate(savedInstanceState)
-        questionDetailsViewMvc = compositionRoot.viewMvcFactory.newQuestionsDetailViewMvc(null)
+        questionDetailsViewMvc = viewMvcFactory.newQuestionsDetailViewMvc(null)
         setContentView(questionDetailsViewMvc.rootView)
 
-        dialogsNavigator = compositionRoot.dialogsNavigator
-        screensNavigator = compositionRoot.screensNavigator
-        fetchQuestionUseCase = compositionRoot.fetchQuestionUseCase
 
         questionId = intent.extras!!.getString(EXTRA_QUESTION_ID)!!
     }

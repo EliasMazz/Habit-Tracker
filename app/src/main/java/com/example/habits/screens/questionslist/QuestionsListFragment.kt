@@ -4,20 +4,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.habits.networking.StackoverflowApi
+import com.example.habits.common.dependencyinjection.Service
 import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.model.Question
 import com.example.habits.screens.common.dialogs.DialogsNavigator
 import com.example.habits.screens.common.screens.ScreensNavigator
+import com.example.habits.screens.common.viewsmvc.ViewMvcFactory
 import com.example.habits.screens.fragments.BaseFragment
 import kotlinx.coroutines.*
 
 class QuestionsListFragment : BaseFragment(), QuestionListViewMvc.Listener {
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
+    @field:Service
     private lateinit var fetchQuestionListUseCase: FetchQuestionListUseCase
+
+    @field:Service
     private lateinit var dialogsNavigator: DialogsNavigator
+
+    @field:Service
     private lateinit var screensNavigator: ScreensNavigator
+
+    @field:Service
+    private lateinit var viewMvcFactory: ViewMvcFactory
 
     private lateinit var viewMvc: QuestionListViewMvc
 
@@ -25,9 +34,7 @@ class QuestionsListFragment : BaseFragment(), QuestionListViewMvc.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fetchQuestionListUseCase = compositionRoot.fetchQuestionListUseCase
-        screensNavigator = compositionRoot.screensNavigator
-        dialogsNavigator = compositionRoot.dialogsNavigator
+        injector.inject(this)
     }
 
     override fun onCreateView(
@@ -35,7 +42,7 @@ class QuestionsListFragment : BaseFragment(), QuestionListViewMvc.Listener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewMvc = compositionRoot.viewMvcFactory.newQuestionsListViewMvc(container)
+        viewMvc = viewMvcFactory.newQuestionsListViewMvc(container)
         return viewMvc.rootView
     }
 

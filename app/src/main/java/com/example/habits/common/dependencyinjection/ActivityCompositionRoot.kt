@@ -1,4 +1,4 @@
-package com.example.habits.common.composition
+package com.example.habits.common.dependencyinjection
 
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity

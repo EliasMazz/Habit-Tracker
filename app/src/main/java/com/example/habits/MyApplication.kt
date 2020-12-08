@@ -1,7 +1,7 @@
 package com.example.habits
 
 import android.app.Application
-import com.example.habits.common.composition.AppCompositionRoot
+import com.example.habits.common.dependencyinjection.AppCompositionRoot
 
 class MyApplication : Application() {
 

@@ -1,4 +1,4 @@
-package com.example.habits.common.composition
+package com.example.habits.common.dependencyinjection
 
 import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.FetchQuestionUseCase
@@ -9,6 +9,10 @@ class PresentationCompositionRoot(private val activityCompositionRoot: ActivityC
     private val stackoverflowApi get() = activityCompositionRoot.stackoverflowApi
 
     private val layoutInflater get() = activityCompositionRoot.layoutInflater
+
+    val dialogsNavigator get() = activityCompositionRoot.dialogsNavigator
+
+    val screensNavigator get() = activityCompositionRoot.screensNavigator
 
     val viewMvcFactory get() = ViewMvcFactory(layoutInflater)
 

@@ -1,9 +1,8 @@
-package com.example.habits.common.composition
+package com.example.habits.common.dependencyinjection
 
 import android.app.Application
 import androidx.annotation.UiThread
 import com.example.habits.Constants
-import com.example.habits.MyApplication
 import com.example.habits.networking.StackoverflowApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
