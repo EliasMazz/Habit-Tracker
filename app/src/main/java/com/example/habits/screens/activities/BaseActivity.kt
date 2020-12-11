@@ -3,8 +3,9 @@ package com.example.habits.screens.activities
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habits.MyApplication
 import com.example.habits.common.dependencyinjection.ActivityCompositionRoot
+import com.example.habits.common.dependencyinjection.DaggerPresentationComponent
 import com.example.habits.common.dependencyinjection.Injector
-import com.example.habits.common.dependencyinjection.PresentationCompositionRoot
+import com.example.habits.common.dependencyinjection.PresentationModule
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -14,9 +15,12 @@ open class BaseActivity : AppCompatActivity() {
         ActivityCompositionRoot(this, appCompositionRoot)
     }
 
-    private val compositionRoot by lazy { PresentationCompositionRoot(activityCompositionRoot) }
+    private val presentationComponent by lazy {
+        DaggerPresentationComponent.builder()
+            .presentationModule(PresentationModule(activityCompositionRoot))
+            .build()
+    }
 
-
-    protected  val injector get() = Injector(compositionRoot)
+    protected val injector get() = Injector(presentationComponent)
 
 }

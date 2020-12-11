@@ -7,7 +7,7 @@ import com.example.habits.screens.common.screens.ScreensNavigator
 import com.example.habits.screens.common.viewsmvc.ViewMvcFactory
 import java.lang.reflect.Field
 
-class Injector(private val compositionRoot: PresentationCompositionRoot) {
+class Injector(private val component: PresentationComponent) {
     fun inject(client: Any) {
         for (field in getAllFields(client)) {
             if (isAnnotatedForInjection(field)) {
@@ -41,19 +41,19 @@ class Injector(private val compositionRoot: PresentationCompositionRoot) {
     private fun getServiceForClass(type: Class<*>): Any {
         when (type) {
             DialogsNavigator::class.java -> {
-                return compositionRoot.dialogsNavigator
+                return component.dialogsNavigator()
             }
             ScreensNavigator::class.java -> {
-                return compositionRoot.screensNavigator
+                return component.screensNavigator()
             }
             FetchQuestionListUseCase::class.java -> {
-                return compositionRoot.fetchQuestionListUseCase
+                return component.fetchQuestionListUseCase()
             }
             FetchQuestionUseCase::class.java -> {
-                return compositionRoot.fetchQuestionUseCase
+                return component.fetchQuestionUseCase()
             }
             ViewMvcFactory::class.java -> {
-                return compositionRoot.viewMvcFactory
+                return component.viewMvcFactory()
             }
             else -> {
                 throw Exception("unsupported service type: $type")
