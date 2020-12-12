@@ -13,17 +13,13 @@ import dagger.Provides
 
 @Module
 class ActivityModule(
-    private val activity: AppCompatActivity,
-    private val appComponent: AppComponent
+    private val activity: AppCompatActivity
 ) {
     @Provides
     fun activity() = activity
 
     @Provides
     fun fragmentManager() = activity.supportFragmentManager
-
-    @Provides
-    fun application() = appComponent.application()
 
     @ActivityScope
     @Provides
@@ -35,7 +31,4 @@ class ActivityModule(
 
     @Provides
     fun layoutInflater(activity: AppCompatActivity): LayoutInflater = LayoutInflater.from(activity)
-
-    @Provides
-    fun stackoverflowApi() = appComponent.getStackoverflowApi()
 }

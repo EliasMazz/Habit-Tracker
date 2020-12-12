@@ -2,7 +2,6 @@ package com.example.habits.screens.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habits.MyApplication
-import com.example.habits.common.dependencyinjection.*
 import com.example.habits.common.dependencyinjection.activity.ActivityComponent
 import com.example.habits.common.dependencyinjection.activity.ActivityModule
 import com.example.habits.common.dependencyinjection.activity.DaggerActivityComponent
@@ -16,7 +15,8 @@ open class BaseActivity : AppCompatActivity() {
 
     val activityComponent: ActivityComponent by lazy {
         DaggerActivityComponent.builder()
-            .activityModule(ActivityModule(this, appCompositionRoot))
+            .appComponent(appCompositionRoot)
+            .activityModule(ActivityModule(this))
             .build()
     }
 
