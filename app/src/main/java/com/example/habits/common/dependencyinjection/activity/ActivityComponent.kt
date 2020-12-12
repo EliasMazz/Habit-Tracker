@@ -6,6 +6,7 @@ import com.example.habits.screens.common.dialogs.DialogsNavigator
 import com.example.habits.screens.common.screens.ScreensNavigator
 import dagger.Component
 
+@ActivityScope
 @Component(modules = [ActivityModule::class])
 interface ActivityComponent {
     fun screensNavigator() : ScreensNavigator

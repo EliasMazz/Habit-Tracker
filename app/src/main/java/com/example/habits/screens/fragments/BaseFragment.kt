@@ -1,8 +1,8 @@
 package com.example.habits.screens.fragments
 
 import androidx.fragment.app.Fragment
-import com.example.habits.common.dependencyinjection.DaggerPresentationComponent
 import com.example.habits.common.dependencyinjection.Injector
+import com.example.habits.common.dependencyinjection.presentation.DaggerPresentationComponent
 import com.example.habits.common.dependencyinjection.presentation.PresentationModule
 import com.example.habits.screens.activities.BaseActivity
 

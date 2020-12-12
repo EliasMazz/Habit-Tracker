@@ -5,6 +5,7 @@ import com.example.habits.networking.StackoverflowApi
 import dagger.Component
 import retrofit2.Retrofit
 
+@AppScope
 @Component(modules = [AppModule::class])
 interface AppComponent {
     fun getRetrofit(): Retrofit
