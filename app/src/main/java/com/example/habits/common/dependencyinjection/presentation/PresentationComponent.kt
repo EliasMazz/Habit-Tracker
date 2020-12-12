@@ -1,17 +1,13 @@
 package com.example.habits.common.dependencyinjection.presentation
 
-import com.example.habits.questions.FetchQuestionListUseCase
-import com.example.habits.questions.FetchQuestionUseCase
-import com.example.habits.screens.common.dialogs.DialogsNavigator
-import com.example.habits.screens.common.screens.ScreensNavigator
-import com.example.habits.screens.common.viewsmvc.ViewMvcFactory
+import com.example.habits.common.dependencyinjection.activity.ActivityComponent
+import com.example.habits.screens.questiondetails.QuestionDetailsActivity
+import com.example.habits.screens.questionslist.QuestionsListFragment
 import dagger.Component
 
-@Component(modules = [PresentationModule::class])
+@PresentationScope
+@Component(dependencies = [ActivityComponent::class], modules = [PresentationModule::class])
 interface PresentationComponent {
-    fun viewMvcFactory(): ViewMvcFactory
-    fun fetchQuestionListUseCase(): FetchQuestionListUseCase
-    fun fetchQuestionUseCase(): FetchQuestionUseCase
-    fun dialogsNavigator(): DialogsNavigator
-    fun screensNavigator(): ScreensNavigator
+    fun inject(fragment: QuestionsListFragment)
+    fun inject(activity: QuestionDetailsActivity)
 }
