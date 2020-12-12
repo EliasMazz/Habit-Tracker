@@ -9,7 +9,6 @@ import dagger.Component
 
 @Component(modules = [PresentationModule::class])
 interface PresentationComponent {
-
     fun viewMvcFactory(): ViewMvcFactory
     fun fetchQuestionListUseCase(): FetchQuestionListUseCase
     fun fetchQuestionUseCase(): FetchQuestionUseCase

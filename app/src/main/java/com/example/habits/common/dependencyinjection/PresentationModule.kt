@@ -9,19 +9,19 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class PresentationModule(private val activityCompositionRoot: ActivityCompositionRoot) {
+class PresentationModule(private val activityComponent: ActivityComponent) {
 
     @Provides
-    fun stackoverflowApi() = activityCompositionRoot.stackoverflowApi
+    fun stackoverflowApi() = activityComponent.stackoverflowApi()
 
     @Provides
-    fun layoutInflater(): LayoutInflater = activityCompositionRoot.layoutInflater
+    fun layoutInflater(): LayoutInflater = activityComponent.layoutInflater()
 
     @Provides
-    fun dialogsNavigator() = activityCompositionRoot.dialogsNavigator
+    fun dialogsNavigator() = activityComponent.dialogsNavigator()
 
     @Provides
-    fun screensNavigator() = activityCompositionRoot.screensNavigator
+    fun screensNavigator() = activityComponent.screensNavigator()
 
     @Provides
     fun viewMvcFactory(layoutInflater: LayoutInflater) = ViewMvcFactory(layoutInflater)
