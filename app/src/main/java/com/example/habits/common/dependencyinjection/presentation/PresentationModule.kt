@@ -1,6 +1,7 @@
-package com.example.habits.common.dependencyinjection
+package com.example.habits.common.dependencyinjection.presentation
 
 import android.view.LayoutInflater
+import com.example.habits.common.dependencyinjection.activity.ActivityComponent
 import com.example.habits.networking.StackoverflowApi
 import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.FetchQuestionUseCase

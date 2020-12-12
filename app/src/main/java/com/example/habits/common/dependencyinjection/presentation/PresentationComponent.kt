@@ -1,4 +1,4 @@
-package com.example.habits.common.dependencyinjection
+package com.example.habits.common.dependencyinjection.presentation
 
 import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.FetchQuestionUseCase

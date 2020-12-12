@@ -1,5 +1,6 @@
 package com.example.habits.common.dependencyinjection
 
+import com.example.habits.common.dependencyinjection.presentation.PresentationComponent
 import com.example.habits.questions.FetchQuestionListUseCase
 import com.example.habits.questions.FetchQuestionUseCase
 import com.example.habits.screens.common.dialogs.DialogsNavigator

@@ -2,22 +2,32 @@ package com.example.habits.screens.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.habits.MyApplication
-import com.example.habits.common.dependencyinjection.ActivityCompositionRoot
-import com.example.habits.common.dependencyinjection.DaggerPresentationComponent
-import com.example.habits.common.dependencyinjection.Injector
-import com.example.habits.common.dependencyinjection.PresentationModule
+import com.example.habits.common.dependencyinjection.*
+import com.example.habits.common.dependencyinjection.activity.ActivityModule
+import com.example.habits.common.dependencyinjection.presentation.PresentationModule
 
 open class BaseActivity : AppCompatActivity() {
 
-    private val appCompositionRoot get() = (application as MyApplication).appCompositionRoot
+    private val appCompositionRoot get() = (application as MyApplication).appComponent
 
     val activityCompositionRoot by lazy {
-        ActivityCompositionRoot(this, appCompositionRoot)
+        DaggerActivityComponent.builder()
+            .activityModule(
+                ActivityModule(
+                    this,
+                    appCompositionRoot
+                )
+            )
+            .build()
     }
 
     private val presentationComponent by lazy {
         DaggerPresentationComponent.builder()
-            .presentationModule(PresentationModule(activityCompositionRoot))
+            .presentationModule(
+                PresentationModule(
+                    activityCompositionRoot
+                )
+            )
             .build()
     }
 

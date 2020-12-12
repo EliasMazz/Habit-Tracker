@@ -1,14 +1,21 @@
 package com.example.habits
 
 import android.app.Application
-import com.example.habits.common.dependencyinjection.AppCompositionRoot
+import com.example.habits.common.dependencyinjection.app.AppComponent
+import com.example.habits.common.dependencyinjection.app.AppModule
+import com.example.habits.common.dependencyinjection.DaggerAppComponent
 
 class MyApplication : Application() {
-
-    lateinit var appCompositionRoot: AppCompositionRoot
+    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
-        appCompositionRoot = AppCompositionRoot(this)
+        appComponent = DaggerAppComponent.builder()
+            .appModule(
+                AppModule(
+                    this
+                )
+            )
+            .build()
     }
 }
