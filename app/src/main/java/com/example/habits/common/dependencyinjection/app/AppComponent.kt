@@ -1,14 +1,11 @@
 package com.example.habits.common.dependencyinjection.app
 
-import android.app.Application
-import com.example.habits.networking.StackoverflowApi
+import com.example.habits.common.dependencyinjection.activity.ActivityComponent
+import com.example.habits.common.dependencyinjection.activity.ActivityModule
 import dagger.Component
-import retrofit2.Retrofit
 
 @AppScope
 @Component(modules = [AppModule::class])
 interface AppComponent {
-    fun getRetrofit(): Retrofit
-    fun getStackoverflowApi(): StackoverflowApi
-    fun application(): Application
+    fun newActivityComponent(activityModule: ActivityModule): ActivityComponent
 }
