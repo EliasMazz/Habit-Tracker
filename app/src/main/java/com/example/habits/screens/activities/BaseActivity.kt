@@ -5,7 +5,6 @@ import com.example.habits.MyApplication
 import com.example.habits.common.dependencyinjection.activity.ActivityComponent
 import com.example.habits.common.dependencyinjection.activity.ActivityModule
 import com.example.habits.common.dependencyinjection.activity.DaggerActivityComponent
-import com.example.habits.common.dependencyinjection.presentation.DaggerPresentationComponent
 import com.example.habits.common.dependencyinjection.presentation.PresentationComponent
 import com.example.habits.common.dependencyinjection.presentation.PresentationModule
 
@@ -21,10 +20,8 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     private val presentationComponent by lazy {
-        DaggerPresentationComponent.builder()
-            .activityComponent(activityComponent)
-            .presentationModule(PresentationModule())
-            .build()
+        activityComponent.newPresentationComponent(PresentationModule())
+
     }
 
     protected val injector: PresentationComponent get() = presentationComponent
