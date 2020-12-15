@@ -10,8 +10,11 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class PresentationModule {
+class UseCasesModule {
 
     @Provides
-    fun viewMvcFactory(layoutInflater: LayoutInflater) = ViewMvcFactory(layoutInflater)
+    fun fetchQuestionListUseCase(stackoverflowApi: StackoverflowApi) = FetchQuestionListUseCase(stackoverflowApi)
+
+    @Provides
+    fun fetchQuestionUseCase(stackoverflowApi: StackoverflowApi) = FetchQuestionUseCase(stackoverflowApi)
 }

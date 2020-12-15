@@ -6,6 +6,7 @@ import com.example.habits.common.dependencyinjection.activity.ActivityComponent
 import com.example.habits.common.dependencyinjection.activity.ActivityModule
 import com.example.habits.common.dependencyinjection.presentation.PresentationComponent
 import com.example.habits.common.dependencyinjection.presentation.PresentationModule
+import com.example.habits.common.dependencyinjection.presentation.UseCasesModule
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     private val presentationComponent by lazy {
-        activityComponent.newPresentationComponent(PresentationModule())
+        activityComponent.newPresentationComponent()
 
     }
 
