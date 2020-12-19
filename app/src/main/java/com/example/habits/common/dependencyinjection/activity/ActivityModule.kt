@@ -1,25 +1,18 @@
 package com.example.habits.common.dependencyinjection.activity
 
-import android.app.Application
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import com.example.habits.common.dependencyinjection.app.AppComponent
-import com.example.habits.networking.StackoverflowApi
 import com.example.habits.screens.common.dialogs.DialogsNavigator
 import com.example.habits.screens.common.screens.ScreensNavigator
 import dagger.Module
 import dagger.Provides
 
 @Module
-class ActivityModule(
-    private val activity: AppCompatActivity
-) {
-    @Provides
-    fun activity() = activity
+object ActivityModule {
 
     @Provides
-    fun fragmentManager() = activity.supportFragmentManager
+    fun fragmentManager(activity: AppCompatActivity) = activity.supportFragmentManager
 
     @ActivityScope
     @Provides
@@ -27,7 +20,7 @@ class ActivityModule(
 
     @ActivityScope
     @Provides
-    fun dialogsNavigator(fragmentManager: FragmentManager)= DialogsNavigator(fragmentManager)
+    fun dialogsNavigator(fragmentManager: FragmentManager) = DialogsNavigator(fragmentManager)
 
     @Provides
     fun layoutInflater(activity: AppCompatActivity): LayoutInflater = LayoutInflater.from(activity)

@@ -10,7 +10,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class UseCasesModule {
+object UseCasesModule {
 
     @Provides
     fun fetchQuestionListUseCase(stackoverflowApi: StackoverflowApi) = FetchQuestionListUseCase(stackoverflowApi)

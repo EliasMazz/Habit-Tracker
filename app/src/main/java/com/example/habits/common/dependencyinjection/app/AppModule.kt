@@ -9,10 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-class AppModule(val application: Application) {
-
-    @Provides
-    fun application(): Application = application
+object AppModule {
 
     @Provides
     @AppScope
@@ -26,5 +23,4 @@ class AppModule(val application: Application) {
     @AppScope
     fun getStackoverflowApi(retrofit: Retrofit): StackoverflowApi =
         retrofit.create(StackoverflowApi::class.java)
-
 }

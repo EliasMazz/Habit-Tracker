@@ -5,15 +5,16 @@ import com.example.habits.MyApplication
 import com.example.habits.common.dependencyinjection.activity.ActivityComponent
 import com.example.habits.common.dependencyinjection.activity.ActivityModule
 import com.example.habits.common.dependencyinjection.presentation.PresentationComponent
-import com.example.habits.common.dependencyinjection.presentation.PresentationModule
-import com.example.habits.common.dependencyinjection.presentation.UseCasesModule
 
 open class BaseActivity : AppCompatActivity() {
 
     private val appCompositionRoot get() = (application as MyApplication).appComponent
 
     val activityComponent: ActivityComponent by lazy {
-        appCompositionRoot.newActivityComponent(ActivityModule(this))
+        appCompositionRoot.newActivityComponentBuilder()
+            .activity(this)
+            .activityModule(ActivityModule)
+            .build()
     }
 
     private val presentationComponent by lazy {
